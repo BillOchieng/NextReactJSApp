@@ -1,62 +1,47 @@
-# hugo-starter
+### First, make sure you have a Next.js app set up. If you haven't created one yet, you can use the following command to create a new Next.js app
 
-This repository contains a template that uses [Netlify](https://www.netlify.com/), [Hugo](https://gohugo.io/), and the [PaperMod](https://github.com/adityatelange/hugo-PaperMod) Hugo theme. Read the the `README.md` file below for step-by-step instructions to get a personal portfolio website up and running.
+```md
+npx create-next-app my-app
 
-## Step 1: Deploy this template
+```
 
-To start using this template, deploy it to [Netlify](https://www.netlify.com/) with the button below.
+### Once your Next.js app is set up, navigate to the root directory of your project
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/allegheny-college-junior-innovators/hugo-starter)
+### Create a new folder called data in the root directory of your project. This is where you'll store your JSON file
 
-You will need to create an account if you don't have one, and link your GitHub account.
+### Place your JSON file inside the data folder. For example, let's say you have a file called data.json, the path would be ./data/data.json
 
-This button will cause Netlify to authenticate with GitHub and create a new repository based off of this template, and then set up deployment through Netlify's hosting services.
+### Now, you can read the JSON file in your Next.js app. Create a new file, such as DataPage.js, in the pages folder of your project
 
-## Step 2: Set your URL
+### Inside DataPage.js, import the JSON file using the relative path
 
-Now that you have your website set up on Netlify, click on the "Deploys" tab and view the most recent deploy -- that is the template itself being built! To visit your new website, look under the "Deploys for ..." header for a link ending in `netlify.app`. You can visit that link and see the base template.
+```
+import data from '../data/data.json';
+```
 
-However, that link is not the most useful or memorable web address -- let's change it to something better! In Netlify, navigate to the "Site settings" tab (it is at the very end of the navigation bar at the top). Then, click the "Change site name" button and enter a better url for your site, like your name.
+### You can now use the data object to access the contents of the JSON file within your component. For example, you can map over an array of objects in the JSON file and render them
 
-Once you have done that, you can navigate back to the Deploys tab or look at the top of the Site settings for the new link to your website; save that link as you'll want to enter it as the `baseURL` value in a later step, and share it with your network.
+```mport data from '../data/data.json';
 
-## Step 3: Customize your website
+const DataPage = () => {
+  return (
+    <div>
+      {data.map((item) => (
+        <div key={item.id}>
+          <h2>{item.title}</h2>
+          <p>{item.description}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
 
-Navigate to the "Deploys" tab in Netlify again, and look for the GitHub link under the "Deploys for ..." header. Click that, and you'll be navigated to the repository that Netlify created for you! Now, edit the files in this repository to set the contents of your website. The following values and files should be configured or removed.
+export default DataPage;
 
-> If you're in a hurry, hit `.` when you're on the main repository page on GitHub and a web instance of VSCode will open. You can use this editor to edit files, make commits, and view the README, although you cannot run any terminal commands.
+```
 
-In `config.toml`:
+### Finally, you can navigate to the URL corresponding to the DataPage component to see the JSON data rendered in your Next.js app
 
-- The `baseURL` key, to match what your chosen URL is on Netlify.
-- The `title` key, to configure what your website is titled (and thus what the browser tab is named).
-- Entries in the `[params]` table, to configure the `author`, `description`, `keywords`, and various other theme options.
-- Entries in the `[params.label]` table, to configure the home label in the top-left corner.
-- Entries in the `[params.profileMode]` table, to configure what you'd like to display on the main page.
-- Entries in the `[params.profileMode.buttons]` array of tables, to configure what buttons you'd like on the main page. You can also remove the existing entries to have no buttons.
-- Entries in the `[params.socialIcons]` array of tables, to configure what social icons and links are on the main page.
-- Entries in the `[menu.main]` array of tables, to configure the top navigation links.
+### Remember to adjust the file paths and JSON structure according to your specific use case
 
-In `static/`:
-
-- `profile.png`, to configure the image to show on the main page (or, if you'd like no image, remove the `image`-related keys in the `[params.profileMode]` table in `config.toml`)
-- Any other static assets like images, fonts, or other static files and folders that you might want to link, reference, or use in your website. These will be available under the root directory of your website -- so, `profile.png` can be directly linked to with `/profile.png`.
-
-In `contents/`:
-
-- The contents (and existence) of the `blog/` folder, if you'd like to have blog posts on your website.
-- The contents of the `projects/` folder -- either edit `_index.md` to show your project details all on one page, or create a project file for each ( use `hugo new --kind project projects/<name-of-project>`), which will be displayed as a card on the projects page.
-- Any additional folders and/or files you'd like; each can be linked to by their file path, so `content/test-folder/my-page.md` would be accessed on your website as `/test-folder/my-page`, and you can add links to them in other pages or the top navigation menu.
-
-Experimentation and creativity in organizing and creating content for your website is very important! If you are confused or would like to find out more about the possible configuration options of the PaperMod theme, visit the [demo website](https://adityatelange.github.io/hugo-PaperMod/posts/papermod/papermod-features/), which lists many of the available configuration options not used in this template.
-
-## Alternatives
-
-If the PaperMod theme isn't quite to your liking, you can easily remove it (use `git rm themes/PaperMod`) and use a different theme! There are many to choose from; [themes.gohugo.io](https://themes.gohugo.io/) contains hundreds of options. Below are a few options and the command you could use to add that theme (after removing PaperMod).
-
-- [Gokarna](https://github.com/526avijitgupta/gokarna) - `git submodule add https://github.com/526avijitgupta/gokarna.git themes/gokarna` - [Setup Guide](https://gokarna-hugo.netlify.app/posts/theme-documentation-basics/)
-- [Developer Portfolio](https://github.com/samrobbins85/hugo-developer-portfolio) - `git submodule add https://github.com/samrobbins85/hugo-developer-portfolio themes/hugo-developer-portfolio`
-- [Highlights](https://github.com/schmanat/hugo-highlights-theme) - `git submodule add https://github.com/schmanat/hugo-highlights-theme.git themes/hugo-highlights-theme`
-- [Osprey Delight](https://github.com/kdevo/osprey-delight) - `git submodule add https://github.com/kdevo/osprey-delight.git themes/osprey-delight`
-
-Keep in mind that every theme is different, and you will need to read through the documentation to discover what entries you can add to `config.toml` and what content structure you should have in `content/`.
+# That's it! You have successfully read a JSON file in a Next.js app using React.js
